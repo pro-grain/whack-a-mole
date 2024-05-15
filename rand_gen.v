@@ -12,16 +12,17 @@ module rand_gen(
         rand = 0;
     end
 
-    always@(posedge rst_n)begin
-        rand = 0;
-    end
-
     always@(posedge clk)begin
+        if (!rst_n)begin
+            rand = 0;
+        end
         count_up = (count_up == 5'b11110)? 5'b00001 : count_up + 1;
     end
 
     always@(count_up)begin
-        rand = count_up;
+        if (rst_n)begin
+            rand = count_up;
+        end
     end
 
 endmodule

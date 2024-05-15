@@ -20,4 +20,41 @@ module scoreboard(
     output [3:0] tens_digit,
     output [3:0] ones_digit
     );
+
+    initial begin
+        hundreds_digit = 0;
+        tens_digit = 0;
+        ones_digit = 0;
+    end
+
+    always@(posedge clk)begin
+        if (score_trigger && rst_n && !clear) begin
+            ones_digit = (ones_digit == 9)? 0 : ones_digit + 1;
+        end
+    end
+
+    always@(ones_digit)begin
+        if (ones_digit == 0 && rst_n && !clear)begin
+            tens_digit = (tens_digit == 9)? 0 : tens_digit + 1;
+        end
+    end
+
+    always@(tens_digit)begin
+        if (tens_digit == 0 && rst_n && !clear)begin
+            hundreds_digit = (hundreds_digit == 9)? 0 : hundreds_digit + 1;
+        end
+    end
+
+    always@(rst_n)begin
+        hundreds_digit = 0;
+        tens_digit = 0;
+        ones_digit = 0;
+    end
+
+    always@(clear)begin
+        hundreds_digit = 0;
+        tens_digit = 0;
+        ones_digit = 0;
+    end
+
 endmodule
