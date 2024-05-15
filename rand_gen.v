@@ -12,6 +12,10 @@ module rand_gen(
         rand = 0;
     end
 
+    always@(posedge rst_n)begin
+        rand = 0;
+    end
+
     always@(posedge clk)begin
         count_up = (count_up == 5'b11110)? 5'b00001 : count_up + 1;
     end
