@@ -13,4 +13,18 @@ module button(
     input raw_button,
     output button
     );
+
+    reg pressed = 0;
+
+    always@(posedge clk)begin
+        if (!pressed && raw_button == 1)begin
+            pressed = 1;
+            button = 1;
+        end
+        else if (pressed && raw_button == 0)begin
+            pressed = 0;
+            button = 0;
+        end
+    end
+
 endmodule
