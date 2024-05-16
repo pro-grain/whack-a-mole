@@ -20,4 +20,30 @@ module board_state(
     output score_trigger,
     output [4:0] board_state
     );
+
+    reg [4:0] hit = 5'b00000;
+    reg [4:0] target = 5'b00000;
+
+    integer i;
+
+    five_button U1(
+        .clk        (clk),
+        .rst_n      (rst_n),
+        .raw_button (button),
+        .button     (hit)
+    );
+
+    always@(posedge clk)begin
+        if (load) begin
+            target = loadval;
+        end
+
+        for (i = 0; i < 5; i = i + 1)begin
+            if (hit[i] && target[i])begin
+                target[i] = 0;
+                score_trigger = 1;
+            end
+        end
+    end
+
 endmodule

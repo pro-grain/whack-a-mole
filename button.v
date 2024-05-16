@@ -14,17 +14,16 @@ module button(
     output button
     );
 
-    reg pressed = 0;
+    reg prev_button = 0;
 
     always@(posedge clk)begin
-        if (!pressed && raw_button == 1)begin
-            pressed = 1;
+        if (prev_button != raw_button && raw_button) begin
             button = 1;
-        end
-        else if (pressed && raw_button == 0)begin
-            pressed = 0;
+        end else begin
             button = 0;
         end
+
+        prev_button = raw_button;
     end
 
 endmodule
