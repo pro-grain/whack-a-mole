@@ -11,7 +11,7 @@ module button(
     input clk,
     input rst_n,
     input raw_button,
-    output button
+    output reg button
     );
 
     reg prev_button = 0;
