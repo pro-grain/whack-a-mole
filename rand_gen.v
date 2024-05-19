@@ -3,7 +3,7 @@
 module rand_gen(
     input clk,
     input rst_n,
-    output [4:0] rand
+    output reg [4:0] rand
     );
 
     reg [4:0] count_up = 5'b00001;
