@@ -50,4 +50,8 @@ module board_state(
         end
     end
 
+    always@(negedge clk)begin
+        score_trigger = 0;
+    end
+
 endmodule
