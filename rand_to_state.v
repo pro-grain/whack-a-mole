@@ -2,7 +2,7 @@
 
 module rand_to_state(
     input [4:0] rand,
-    output [4:0] state
+    output reg [4:0] state
     );
 
     always@(rand)begin

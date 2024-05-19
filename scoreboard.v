@@ -16,9 +16,9 @@ module scoreboard(
     input rst_n,
     input clear,
     input score_trigger,
-    output [3:0] hundreds_digit,
-    output [3:0] tens_digit,
-    output [3:0] ones_digit
+    output reg [3:0] hundreds_digit,
+    output reg [3:0] tens_digit,
+    output reg [3:0] ones_digit
     );
 
     initial begin
