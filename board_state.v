@@ -22,9 +22,13 @@ module board_state(
     );
 
     wire [4:0] hit = 5'b00000;
-    reg [4:0] target = 5'b00000;
 
     integer i;
+
+    initial begin
+        board_state = 5'b00000;
+        score_trigger = 0;
+    end
 
     five_button U1(
         .clk        (clk),
@@ -35,12 +39,12 @@ module board_state(
 
     always@(posedge clk)begin
         if (load) begin
-            target = loadval;
+            board_state = loadval;
         end
 
         for (i = 0; i < 5; i = i + 1)begin
-            if (hit[i] && target[i])begin
-                target[i] = 0;
+            if (hit[i] && board_state[i])begin
+                board_state[i] = 0;
                 score_trigger = 1;
             end
         end
