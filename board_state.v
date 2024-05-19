@@ -17,8 +17,8 @@ module board_state(
     input load,
     input [4:0] loadval,
     input [4:0] button,
-    output reg score_trigger,
-    output reg [4:0] board_state
+    output score_trigger,
+    output [4:0] board_state
     );
 
     reg [4:0] hit = 5'b00000;

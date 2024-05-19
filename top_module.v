@@ -14,9 +14,9 @@ module top_module(
     input clk,
     input rst_n,
     input [4:0] raw_button, // from button
-    output reg [4:0] led, // from board
-    output reg [7:0] svn_seg_disp, // from display (contains scoreboard and timer)
-    output reg [7:0] disp_enable
+    output [4:0] led, // from board
+    output [7:0] svn_seg_disp, // from display (contains scoreboard and timer)
+    output [7:0] disp_enable
     );
     
     /// state parameters ///
