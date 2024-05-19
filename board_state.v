@@ -21,7 +21,7 @@ module board_state(
     output reg [4:0] board_state
     );
 
-    reg [4:0] hit = 5'b00000;
+    wire [4:0] hit = 5'b00000;
     reg [4:0] target = 5'b00000;
 
     integer i;
