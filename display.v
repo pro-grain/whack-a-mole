@@ -25,7 +25,7 @@ module display(
 
     reg [3:0] current_digit;
     reg [2:0] count = 0;
-    reg nclk;
+    wire nclk;
 
     clk_div U0 (.clk(clk), .nclk(nclk));
 
