@@ -30,8 +30,48 @@ module display(
     clk_div U0 (.clk(clk), .nclk(nclk));
 
     always@(posedge nclk)begin
-
+        count = (count == 3'b111) ? 3'b000 : count + 1;
     end
 
+    always@(count)begin
+        case(count)
+            3'b000: enable = 8'b11111110;
+            3'b001: enable = 8'b11111101;
+            3'b010: enable = 8'b11111011;
+            3'b011: enable = 8'b11110111;
+            3'b100: enable = 8'b11101111;
+            3'b101: enable = 8'b11011111;
+            3'b110: enable = 8'b10111111;
+            3'b111: enable = 8'b01111111;
+            default: enable = 8'b11111111;
+        endcase
+
+        case(count)
+            3'b000: current_digit = display0;
+            3'b001: current_digit = display1;
+            3'b010: current_digit = display2;
+            3'b011: current_digit = display3;
+            3'b100: current_digit = display4;
+            3'b101: current_digit = display5;
+            3'b110: current_digit = display6;
+            3'b111: current_digit = display7;
+        endcase
+    end
+
+    always@(current_digit)begin
+        case(current_digit)
+            0: segment = 8'b00000011;
+            1: segment = 8'b10011111;
+            2: segment = 8'b00100101;
+            3: segment = 8'b00001101;
+            4: segment = 8'b10011001;
+            5: segment = 8'b01001001;
+            6: segment = 8'b01000001;
+            7: segment = 8'b00011111;
+            8: segment = 8'b00000001;
+            9: segment = 8'b00001001;
+            default: segment = 8'b11111111;
+        endcase
+    end
 
 endmodule
