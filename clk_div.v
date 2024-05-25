@@ -3,7 +3,7 @@
 module clk_div(
     input clk,
     output reg nclk
-)
+);
     localparam DIVIDER = 5000;
 
     reg [19:0] counter = 0;
