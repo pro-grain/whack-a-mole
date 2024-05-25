@@ -13,7 +13,7 @@ module board_timer(
     input rst_n,
     input load,
     input [27:0] loadval,
-    output time_trigger
+    output reg time_trigger
     );
     
 endmodule

@@ -27,9 +27,15 @@ module scoreboard(
         ones_digit = 0;
     end
 
-    always@(posedge clk)begin
+    always@(posedge clk or negedge rst_n)begin
         if (score_trigger && rst_n && !clear) begin
             ones_digit = (ones_digit == 9)? 0 : ones_digit + 1;
+        end
+
+        if (!rst_n)begin
+            hundreds_digit = 0;
+            tens_digit = 0;
+            ones_digit = 0;
         end
     end
 
@@ -45,13 +51,7 @@ module scoreboard(
         end
     end
 
-    always@(rst_n)begin
-        hundreds_digit = 0;
-        tens_digit = 0;
-        ones_digit = 0;
-    end
-
-    always@(clear)begin
+    always@(posedge clear)begin
         hundreds_digit = 0;
         tens_digit = 0;
         ones_digit = 0;

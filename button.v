@@ -16,7 +16,7 @@ module button(
 
     reg prev_button = 0;
 
-    always@(posedge clk)begin
+    always@(posedge clk or negedge rst_n)begin
         if (prev_button != raw_button && raw_button) begin
             button = 1;
         end else begin
@@ -24,6 +24,10 @@ module button(
         end
 
         prev_button = raw_button;
+
+        if(!rst_n)begin
+            button = 0;
+        end
     end
 
 endmodule

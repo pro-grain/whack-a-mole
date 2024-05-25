@@ -37,7 +37,7 @@ module board_state(
         .button     (hit)
     );
 
-    always@(posedge clk)begin
+    always@(posedge clk or negedge rst_n)begin
         if (load) begin
             board_state = loadval;
         end
@@ -48,10 +48,15 @@ module board_state(
                 score_trigger = 1;
             end
         end
-    end
 
-    always@(negedge clk)begin
-        score_trigger = 0;
+        if (hit = 5'b00000)begin
+            score_trigger = 0;
+        end
+
+        if(!rst_n)begin
+            score_trigger = 0;
+            board_state = 5'b00000;
+        end
     end
 
 endmodule

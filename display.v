@@ -29,13 +29,12 @@ module display(
 
     clk_div U0 (.clk(clk), .nclk(nclk));
 
-    always@(negedge rst_n)begin
-        segment = 8'b11111111;
-        enable = 8'b11111111;
-    end
-
-    always@(posedge nclk)begin
+    always@(posedge nclk or negedge rst_n)begin
         count = (count == 3'b111) ? 3'b000 : count + 1;
+        if (!rst_n)begin
+            segment = 8'b11111111;
+            enable = 8'b11111111;
+        end
     end
 
     always@(count)begin

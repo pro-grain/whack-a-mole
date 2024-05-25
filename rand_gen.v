@@ -12,7 +12,7 @@ module rand_gen(
         rand = 0;
     end
 
-    always@(posedge clk)begin
+    always@(posedge clk or negedge rst_n)begin
         if (!rst_n)begin
             rand = 0;
         end
