@@ -21,7 +21,7 @@ module board_state(
     output reg [4:0] board_state
     );
 
-    wire [4:0] hit = 5'b00000;
+    wire [4:0] hit;
 
     integer i;
 
@@ -37,25 +37,21 @@ module board_state(
         .button     (hit)
     );
 
-    always@(posedge clk or negedge rst_n)begin
-        if (load) begin
-            board_state = loadval;
-        end
-
-        for (i = 0; i < 5; i = i + 1)begin
-            if (hit[i] && board_state[i])begin
-                board_state[i] = 0;
-                score_trigger = 1;
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            board_state <= 5'b00000;
+            score_trigger <= 0;
+        end else if (load) begin
+            board_state <= loadval;
+            score_trigger <= 0;  // Ensure score_trigger is cleared on load
+        end else begin
+            score_trigger <= 0;  // Default to 0, will be set to 1 if hit detected
+            for (i = 0; i < 5; i = i + 1) begin
+                if (hit[i] && board_state[i]) begin
+                    board_state[i] <= 0;
+                    score_trigger <= 1;
+                end
             end
-        end
-
-        if (hit = 5'b00000)begin
-            score_trigger = 0;
-        end
-
-        if(!rst_n)begin
-            score_trigger = 0;
-            board_state = 5'b00000;
         end
     end
 

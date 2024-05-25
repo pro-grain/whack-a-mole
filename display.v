@@ -24,20 +24,22 @@ module display(
     );
 
     reg [3:0] current_digit;
-    reg [2:0] count = 0;
+    reg [2:0] count;
     wire nclk;
 
     clk_div U0 (.clk(clk), .nclk(nclk));
 
-    always@(posedge nclk or negedge rst_n)begin
-        count = (count == 3'b111) ? 3'b000 : count + 1;
-        if (!rst_n)begin
-            segment = 8'b11111111;
-            enable = 8'b11111111;
+    always@(posedge nclk or negedge rst_n) begin
+        if (!rst_n) begin
+            count <= 3'b000;
+            segment <= 8'b11111111;
+            enable <= 8'b11111111;
+        end else begin
+            count <= (count == 3'b111) ? 3'b000 : count + 1;
         end
     end
 
-    always@(count)begin
+    always@(*) begin
         case(count)
             3'b000: enable = 8'b11111110;
             3'b001: enable = 8'b11111101;
@@ -62,18 +64,18 @@ module display(
         endcase
     end
 
-    always@(current_digit)begin
+    always@(*) begin
         case(current_digit)
-            0: segment = 8'b00000011;
-            1: segment = 8'b10011111;
-            2: segment = 8'b00100101;
-            3: segment = 8'b00001101;
-            4: segment = 8'b10011001;
-            5: segment = 8'b01001001;
-            6: segment = 8'b01000001;
-            7: segment = 8'b00011111;
-            8: segment = 8'b00000001;
-            9: segment = 8'b00001001;
+            4'd0: segment = 8'b00000011;
+            4'd1: segment = 8'b10011111;
+            4'd2: segment = 8'b00100101;
+            4'd3: segment = 8'b00001101;
+            4'd4: segment = 8'b10011001;
+            4'd5: segment = 8'b01001001;
+            4'd6: segment = 8'b01000001;
+            4'd7: segment = 8'b00011111;
+            4'd8: segment = 8'b00000001;
+            4'd9: segment = 8'b00001001;
             default: segment = 8'b11111111;
         endcase
     end
