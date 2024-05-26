@@ -16,4 +16,30 @@ module board_timer(
     output reg time_trigger
     );
     
+    reg [27:0] counter;
+
+    initial begin
+        time_trigger = 0;
+    end
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            // Reset the counter and trigger
+            counter <= 28'd0;
+            time_trigger <= 1'b0;
+        end else if (load) begin
+            // Load the counter with the load value
+            counter <= loadval;
+            time_trigger <= 1'b0;
+        end else if (counter > 0) begin
+            // Decrement the counter
+            counter <= counter - 1;
+            time_trigger <= 1'b0;
+        end else begin
+            // When the counter reaches zero, trigger the time_trigger signal
+            time_trigger <= 1'b1;
+        end
+    end
+    
+
 endmodule
