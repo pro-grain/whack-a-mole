@@ -18,13 +18,16 @@ module board_timer(
     
     reg [27:0] counter;
 
+    // Initial block to set initial values
     initial begin
         time_trigger = 0;
+        counter = 0;
     end
 
+    // Sequential always block triggered on clock edge or reset
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            // Reset the counter and trigger
+            // Active low reset
             counter <= 28'd0;
             time_trigger <= 1'b0;
         end else if (load) begin
@@ -40,6 +43,5 @@ module board_timer(
             time_trigger <= 1'b1;
         end
     end
-    
 
 endmodule

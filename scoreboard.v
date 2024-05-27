@@ -16,41 +16,47 @@ module scoreboard(
     input rst_n,
     input clear,
     input score_trigger,
-    output [3:0] hundreds_digit,
-    output [3:0] tens_digit,
-    output [3:0] ones_digit
+    output reg [3:0] hundreds_digit,
+    output reg [3:0] tens_digit,
+    output reg [3:0] ones_digit
     );
 
+    // Initialize the digits to 0
     initial begin
         hundreds_digit = 0;
         tens_digit = 0;
         ones_digit = 0;
     end
 
-    always@(posedge clk or negedge rst_n)begin
-        if (!rst_n)begin
-            hundreds_digit = 0;
-            tens_digit = 0;
-            ones_digit = 0;
-        end else if (clear)begin
-            hundreds_digit = 0;
-            tens_digit = 0;
-            ones_digit = 0;
+    // Main always block triggered by clock or reset
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            // Reset all digits to 0
+            hundreds_digit <= 0;
+            tens_digit <= 0;
+            ones_digit <= 0;
+        end else if (clear) begin
+            // Clear all digits to 0
+            hundreds_digit <= 0;
+            tens_digit <= 0;
+            ones_digit <= 0;
         end else if (score_trigger) begin
-            ones_digit = (ones_digit == 9)? 0 : ones_digit + 1;
-        end
-
-    end
-
-    always@(ones_digit)begin
-        if (ones_digit == 0 && rst_n && !clear)begin
-            tens_digit = (tens_digit == 9)? 0 : tens_digit + 1;
-        end
-    end
-
-    always@(tens_digit)begin
-        if (tens_digit == 0 && rst_n && !clear)begin
-            hundreds_digit = (hundreds_digit == 9)? 0 : hundreds_digit + 1;
+            // Increment score
+            if (ones_digit == 9) begin
+                ones_digit <= 0;
+                if (tens_digit == 9) begin
+                    tens_digit <= 0;
+                    if (hundreds_digit == 9) begin
+                        hundreds_digit <= 0;
+                    end else begin
+                        hundreds_digit <= hundreds_digit + 1;
+                    end
+                end else begin
+                    tens_digit <= tens_digit + 1;
+                end
+            end else begin
+                ones_digit <= ones_digit + 1;
+            end
         end
     end
 

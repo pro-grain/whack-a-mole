@@ -6,18 +6,21 @@ module clk_div(
 );
     localparam DIVIDER = 5000;
 
-    reg [19:0] counter = 0;
+    reg [19:0] counter;
 
+    // Initialize the counter and nclk
     initial begin
+        counter = 0;
         nclk = 0;
     end
 
-    always@(posedge clk)begin
+    // Clock divider logic
+    always @(posedge clk) begin
         if (counter == DIVIDER - 1) begin
-            counter = 0;
-            nclk = -nclk;
+            counter <= 0;
+            nclk <= ~nclk; // Toggle nclk
         end else begin
-            counter = counter + 1;
+            counter <= counter + 1;
         end
     end
 

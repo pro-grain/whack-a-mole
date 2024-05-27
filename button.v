@@ -14,19 +14,24 @@ module button(
     output reg button
     );
 
-    reg prev_button = 0;
+    reg prev_button;
 
-    always@(posedge clk or negedge rst_n)begin
-        if (prev_button != raw_button && raw_button) begin
-            button = 1;
+    // Initialize prev_button in the initial block
+    initial begin
+        prev_button = 0;
+    end
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            button <= 0;
+            prev_button <= 0;
         end else begin
-            button = 0;
-        end
-
-        prev_button = raw_button;
-
-        if(!rst_n)begin
-            button = 0;
+            if (prev_button != raw_button && raw_button) begin
+                button <= 1;
+            end else begin
+                button <= 0;
+            end
+            prev_button <= raw_button;
         end
     end
 

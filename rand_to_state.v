@@ -5,8 +5,8 @@ module rand_to_state(
     output reg [4:0] state
     );
 
-    always@(rand)begin
-        state = rand;
+    always @(rand) begin
+        state <= rand;
     end
 
 endmodule

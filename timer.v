@@ -3,12 +3,12 @@
 // Count-down timer that keeps track of game time
 //
 // Input clk - system clock
-// Input rst_n - active low
-// input load - active high
-// input [3:0] load_tens_digit - bcd
-// input [3:0] load_ones_digit - bcd
-// output [3:0] tens_digit - bcd
-// output [3:0] ones_digit - bcd
+// Input rst_n - active low reset
+// input load - active high load
+// input [3:0] load_tens_digit - BCD input for tens digit
+// input [3:0] load_ones_digit - BCD input for ones digit
+// output reg [3:0] tens_digit - BCD output for tens digit
+// output reg [3:0] ones_digit - BCD output for ones digit
 ////////////////////////////////////////////////////
 module timer(
     input clk,
