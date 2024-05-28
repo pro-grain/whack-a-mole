@@ -21,7 +21,6 @@ module board_state(
     output reg [4:0] board_state
     );
 
-    wire [4:0] hit;
 
     integer i;
 
@@ -30,14 +29,6 @@ module board_state(
         board_state = 5'b00000;
         score_trigger = 0;
     end
-
-    // Instantiate the five_button module
-    five_button U1(
-        .clk        (clk),
-        .rst_n      (rst_n),
-        .raw_button (button),
-        .button     (hit)
-    );
 
     // Sequential always block triggered on clock edge or reset
     always @(posedge clk or negedge rst_n) begin
@@ -53,7 +44,7 @@ module board_state(
             // Default to 0, will be set to 1 if hit detected
             score_trigger <= 0;
             for (i = 0; i < 5; i = i + 1) begin
-                if (hit[i] && board_state[i]) begin
+                if (button[i] && board_state[i]) begin
                     board_state[i] <= 0;
                     score_trigger <= 1;
                 end
